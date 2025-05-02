@@ -79,7 +79,7 @@ public class StudentManager {
 				students[choice - 1].setFullName(fullName);
 				students[choice - 1].setClassRoom(classRoom);
 				students[choice - 1].setAverageScore(averageScore);
-
+				students[choice - 1].setUpdatedAt(TimeOperation.getTime());
 				ConsoleColor.message("Đã cập nhật thông tin sinh viên thành công.", "success");
 				break;
 
