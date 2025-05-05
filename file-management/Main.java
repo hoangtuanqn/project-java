@@ -5,29 +5,14 @@ public class Main {
 	static FileInfoManager manager;
 
 	public static void displayEnterPathFile() {
-		System.out.print("Vui lòng nhập đường dẫn của file: ");
-		String pathFile = sc.nextLine();
-		manager = new FileInfoManager(pathFile);
-//		manager = new FileInfoManager("C:\\Users\\MSI\\Downloads\\TestNe");
-	}
-
-	public static void displayMenu() {
-		String[] messages = { "Kiểm tra file có thể thực thi", "Kiểm tra file có thể đọc", "Kiểm tra file có thể ghi",
-				"In đường dẫn", "In tên file/folder", "Kiểm tra file là thư mục hoặc tập tin", "In ra cây thư mục",
-				"In ra các file ẩn trong thư mục" };
-
-		int length = messages.length;
-
-		System.out.println("------MENU------");
-		for (int i = 0; i < length; ++i) {
-			System.out.println(i + 1 + ". " + messages[i]);
-		}
-		System.out.println("0. Thoát chương trình");
-		System.out.print("Chọn (0-" + length + "): ");
+//		System.out.print("Vui lòng nhập đường dẫn của file: ");
+//		String pathFile = sc.nextLine();
+//		manager = new FileInfoManager(pathFile);
+		manager = new FileInfoManager("C:\\Users\\MSI\\Downloads\\TestNe\\test.txt");
 	}
 
 	public static void main(String[] args) {
-		int choice;
+		int choice, c;
 		do {
 
 			displayEnterPathFile();
@@ -39,7 +24,7 @@ public class Main {
 
 		do {
 
-			displayMenu();
+			Menu.displayMenu();
 			try {
 				choice = sc.nextInt();
 				sc.nextLine(); // Clear key Enter
@@ -81,6 +66,31 @@ public class Main {
 					manager.displayTreeFolder(true);
 					break;
 
+				case 9:
+					Menu.displayMenuWarning();
+					c = sc.nextInt();
+					sc.nextLine();
+					if (c != 1) {
+						break;
+					}
+					System.out.print("Vui lòng nhập tên mới của tệp tin / thư mục: ");
+					String PathNew = sc.nextLine();
+					manager.renameTo(PathNew);
+					break;
+					
+				case 10:
+					break;
+					
+				case 11:
+					Menu.displayMenuWarning();
+					c = sc.nextInt();
+					sc.nextLine();
+					if (c != 1) {
+						break;
+					}
+
+					manager.clearFiles();
+					break;
 				}
 
 				System.out.print("Nhấn Enter để tiếp tục: ");

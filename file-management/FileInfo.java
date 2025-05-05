@@ -39,11 +39,21 @@ public class FileInfo {
 		return this.file.isFile();
 	}
 
-
 	public File[] listFiles() {
 		return this.file.listFiles();
 	}
-	
+
+	public boolean delete() {
+		return this.file.delete();
+	}
+
+	public boolean renameTo(File desc) {
+		return this.file.renameTo(desc);
+	}
+
+	public String getParent() {
+		return this.file.getParent();
+	}
 
 	public void displayFileHidden() {
 

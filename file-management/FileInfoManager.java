@@ -86,11 +86,44 @@ public class FileInfoManager {
 		displayFilesInFolder(this.file.listFiles(), 1, hidden);
 	}
 
-	public void displayFileHidden() {
+	public void handleClearFiles(File[] childFolder) {
+		for (File child : childFolder) {
+			if (child.isFile())
+				child.delete();
+			else {
+				handleClearFiles(child.listFiles());
+				child.delete();
+			}
+		}
+	}
+
+	public void clearFiles() {
+		if (!this.file.isDirectory()) {
+			ConsoleColor.message("Đây không phải là thư mục nên không có các tệp tin con phía trong.", "error");
+			return;
+		}
+		handleClearFiles(this.file.listFiles());
+		this.file.delete();
+		ConsoleColor.message("Đã xóa hết tất cả các tệp tin", "success");
 
 	}
 
 	public boolean exists() {
 		return this.file.exists();
+	}
+
+	public void renameTo(String pathNew) {
+		String pathParent = this.file.getParent();
+		if (this.file.isDirectory()) {
+			pathParent = this.file.getAbsolutePath();
+		}
+		pathParent += "\\";
+		String newPath = pathParent + pathNew;
+		if (this.file.renameTo(new File(newPath))) {
+			ConsoleColor.message("Đã đổi tên thành công", "success");
+			this.file = new FileInfo(newPath);
+			return;
+		}
+		ConsoleColor.message("Đã xảy ra lỗi trong quá trình đổi tên", "error");
 	}
 }
