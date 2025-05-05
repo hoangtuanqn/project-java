@@ -39,6 +39,10 @@ public class FileInfo {
 		return this.file.isFile();
 	}
 
+	public boolean mkdir() {
+		return this.file.mkdir();
+	}
+
 	public File[] listFiles() {
 		return this.file.listFiles();
 	}

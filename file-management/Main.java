@@ -8,7 +8,7 @@ public class Main {
 //		System.out.print("Vui lòng nhập đường dẫn của file: ");
 //		String pathFile = sc.nextLine();
 //		manager = new FileInfoManager(pathFile);
-		manager = new FileInfoManager("C:\\Users\\MSI\\Downloads\\TestNe\\test.txt");
+		manager = new FileInfoManager("C:\\Users\\MSI\\Downloads\\TestNe");
 	}
 
 	public static void main(String[] args) {
@@ -79,8 +79,8 @@ public class Main {
 					break;
 					
 				case 10:
+					System.out.println("Comming soon ...");
 					break;
-					
 				case 11:
 					Menu.displayMenuWarning();
 					c = sc.nextInt();
@@ -88,7 +88,6 @@ public class Main {
 					if (c != 1) {
 						break;
 					}
-
 					manager.clearFiles();
 					break;
 				}

@@ -112,13 +112,13 @@ public class FileInfoManager {
 		return this.file.exists();
 	}
 
-	public void renameTo(String pathNew) {
+	public void renameTo(String nameFile) {
 		String pathParent = this.file.getParent();
 		if (this.file.isDirectory()) {
 			pathParent = this.file.getAbsolutePath();
 		}
 		pathParent += "\\";
-		String newPath = pathParent + pathNew;
+		String newPath = pathParent + nameFile;
 		if (this.file.renameTo(new File(newPath))) {
 			ConsoleColor.message("Đã đổi tên thành công", "success");
 			this.file = new FileInfo(newPath);
@@ -126,4 +126,5 @@ public class FileInfoManager {
 		}
 		ConsoleColor.message("Đã xảy ra lỗi trong quá trình đổi tên", "error");
 	}
+
 }
