@@ -5,10 +5,9 @@ public class Main {
 	static FileInfoManager manager;
 
 	public static void displayEnterPathFile() {
-//		System.out.print("Vui lòng nhập đường dẫn của file: ");
-//		String pathFile = sc.nextLine();
-//		manager = new FileInfoManager(pathFile);
-		manager = new FileInfoManager("C:\\Users\\MSI\\Downloads\\TestNe");
+		System.out.print("Vui lòng nhập đường dẫn của file: ");
+		String pathFile = sc.nextLine();
+		manager = new FileInfoManager(pathFile);
 	}
 
 	public static void main(String[] args) {
@@ -77,9 +76,17 @@ public class Main {
 					String PathNew = sc.nextLine();
 					manager.renameTo(PathNew);
 					break;
-					
+
 				case 10:
-					System.out.println("Comming soon ...");
+					Menu.displayMenuWarning();
+					c = sc.nextInt();
+					sc.nextLine();
+					if (c != 1) {
+						break;
+					}
+					System.out.print("Vui lòng nhập đường dẫn mới: ");
+					PathNew = sc.nextLine();
+					manager.move(PathNew);
 					break;
 				case 11:
 					Menu.displayMenuWarning();

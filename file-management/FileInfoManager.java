@@ -1,10 +1,12 @@
 import java.io.File;
 
 public class FileInfoManager {
-	FileInfo file;
+	private FileInfo file;
+	private String pathFile;
 
 	public FileInfoManager(String pathFile) {
 		this.file = new FileInfo(pathFile);
+		this.pathFile = pathFile;
 	}
 
 	public void canExecute() {
@@ -125,6 +127,41 @@ public class FileInfoManager {
 			return;
 		}
 		ConsoleColor.message("Đã xảy ra lỗi trong quá trình đổi tên", "error");
+	}
+
+	public void handleMove(File fileOld, File fileNew) {
+		if (fileOld.isFile()) {
+			String pathOk = fileNew.getAbsoluteFile() + "\\" + fileOld.getName();
+			if (fileOld.renameTo(new File(pathOk))) {
+				ConsoleColor.message("Đã di chuyển thành công file " + fileOld.getAbsolutePath(), "success");
+			} else {
+				ConsoleColor.message("Đã xảy ra lỗi khi di chuyển file " + fileOld.getAbsolutePath() + " sang: " + pathOk, "error");
+			}
+		} else {
+			File[] childFolder = fileOld.listFiles();
+			File fileNew2;
+			for (File child : childFolder) {
+				if (child.isDirectory()) {
+					fileNew2 = new File(fileNew.getAbsoluteFile() + "\\" + child.getName());
+					if (!fileNew2.exists()) {
+						fileNew2.mkdir();
+					}
+				} else {
+					fileNew2 = fileNew;
+				}
+				handleMove(child, fileNew2);
+				child.delete();
+			}
+		}
+	}
+
+	public void move(String pathNew) {
+		File fileNew = new File(pathNew);
+		if (fileNew.isFile() || !fileNew.exists()) {
+			ConsoleColor.message("Đường dẫn mới bắt buộc phải là thư mục và phải tồn tại trước.", "error");
+			return;
+		}
+		handleMove(new File(this.pathFile), new File(pathNew));
 	}
 
 }
