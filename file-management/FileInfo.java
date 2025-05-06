@@ -1,65 +1,61 @@
 import java.io.File;
 
 public class FileInfo {
-	private File file;
+	private final File file;
 
-	public FileInfo(String pathFile) {
-		this.file = new File(pathFile);
+	public FileInfo(String path) {
+		this.file = new File(path);
 	}
 
 	public boolean exists() {
-		return this.file.exists();
-	}
-
-	public boolean canExecute() {
-		return this.file.canExecute();
+		return file.exists();
 	}
 
 	public boolean canRead() {
-		return this.file.canRead();
+		return file.canRead();
 	}
 
 	public boolean canWrite() {
-		return this.file.canWrite();
+		return file.canWrite();
 	}
 
-	public String getAbsolutePath() {
-		return this.file.getAbsolutePath();
-	}
-
-	public String getName() {
-		return this.file.getName();
-	}
-
-	public boolean isDirectory() {
-		return this.file.isDirectory();
+	public boolean canExecute() {
+		return file.canExecute();
 	}
 
 	public boolean isFile() {
-		return this.file.isFile();
+		return file.isFile();
 	}
 
-	public boolean mkdir() {
-		return this.file.mkdir();
+	public boolean isDirectory() {
+		return file.isDirectory();
 	}
 
-	public File[] listFiles() {
-		return this.file.listFiles();
+	public String getAbsolutePath() {
+		return file.getAbsolutePath();
 	}
 
-	public boolean delete() {
-		return this.file.delete();
-	}
-
-	public boolean renameTo(File desc) {
-		return this.file.renameTo(desc);
+	public String getName() {
+		return file.getName();
 	}
 
 	public String getParent() {
-		return this.file.getParent();
+		return file.getParent();
 	}
 
-	public void displayFileHidden() {
+	public File[] listFiles() {
+		return file.listFiles();
+	}
 
+	public boolean renameTo(File dest) {
+		return file.renameTo(dest);
+	}
+
+	public boolean delete() {
+		return file.delete();
+	}
+
+	public File getFile() {
+		return this.file;
 	}
 }

@@ -1,111 +1,77 @@
 import java.util.*;
 
 public class Main {
-	static Scanner sc = new Scanner(System.in);
-	static FileInfoManager manager;
+	private static final Scanner sc = new Scanner(System.in);
+	private static FileInfoManager manager;
 
-	public static void displayEnterPathFile() {
+	private static void promptForFilePath() {
 		System.out.print("Vui lòng nhập đường dẫn của file: ");
 		String pathFile = sc.nextLine();
 		manager = new FileInfoManager(pathFile);
 	}
 
-	public static void main(String[] args) {
-		int choice, c;
-		do {
+	private static boolean confirmDangerousAction() {
+		Menu.displayMenuWarning();
+		int choice = sc.nextInt();
+		sc.nextLine();
+		return choice == 1;
+	}
 
-			displayEnterPathFile();
+	public static void main(String[] args) {
+		while (true) {
+			promptForFilePath();
 			if (manager.exists())
 				break;
-			ConsoleColor.message("Bạn vừa nhập đường dẫn không hợp lệ. Yêu cầu nhập lại.", "error");
+			ConsoleColor.message("Đường dẫn không hợp lệ. Vui lòng nhập lại.", "error");
+		}
 
-		} while (true);
-
-		do {
-
+		while (true) {
 			Menu.displayMenu();
 			try {
-				choice = sc.nextInt();
-				sc.nextLine(); // Clear key Enter
+				int choice = sc.nextInt();
+				sc.nextLine(); // clear Enter
 
 				switch (choice) {
-				case 0:
-					ConsoleColor.message("Đã thoát chương trình thành công", "success");
-					return;
 
-				case 1:
-					manager.canExecute();
-					break;
-
-				case 2:
-					manager.canRead();
-					break;
-
-				case 3:
-					manager.canWrite();
-					break;
-
-				case 4:
-					manager.getAbsolutePath();
-					break;
-
-				case 5:
-					manager.getName();
-					break;
-
-				case 6:
-					manager.isDirectoryOrFile();
-					break;
-
-				case 7:
-					manager.displayTreeFolder(false);
-					break;
-
-				case 8:
-					manager.displayTreeFolder(true);
-					break;
-
-				case 9:
-					Menu.displayMenuWarning();
-					c = sc.nextInt();
-					sc.nextLine();
-					if (c != 1) {
-						break;
+				case 0 -> ConsoleColor.message("Đã thoát chương trình thành công", "success");
+				case 1 -> manager.canExecute();
+				case 2 -> manager.canRead();
+				case 3 -> manager.canWrite();
+				case 4 -> manager.getAbsolutePath();
+				case 5 -> manager.getName();
+				case 6 -> manager.isDirectoryOrFile();
+				case 7 -> manager.displayTreeFolder(false);
+				case 8 -> manager.displayTreeFolder(true);
+				case 9 -> {
+					if (confirmDangerousAction()) {
+						System.out.print("Nhập tên mới của tệp tin / thư mục: ");
+						String newName = sc.nextLine();
+						manager.renameTo(newName);
 					}
-					System.out.print("Vui lòng nhập tên mới của tệp tin / thư mục: ");
-					String PathNew = sc.nextLine();
-					manager.renameTo(PathNew);
-					break;
+				}
+				case 10 -> {
+					if (confirmDangerousAction()) {
+						System.out.print("Nhập đường dẫn mới: ");
+						String newPath = sc.nextLine();
+						manager.move(newPath);
+					}
+				}
+				case 11 -> {
+					if (confirmDangerousAction()) {
+						manager.clearFiles();
+					}
+				}
 
-				case 10:
-					Menu.displayMenuWarning();
-					c = sc.nextInt();
-					sc.nextLine();
-					if (c != 1) {
-						break;
-					}
-					System.out.print("Vui lòng nhập đường dẫn mới: ");
-					PathNew = sc.nextLine();
-					manager.move(PathNew);
-					break;
-				case 11:
-					Menu.displayMenuWarning();
-					c = sc.nextInt();
-					sc.nextLine();
-					if (c != 1) {
-						break;
-					}
-					manager.clearFiles();
-					break;
+				default -> ConsoleColor.message("Lựa chọn không hợp lệ.", "error");
+
 				}
 
 				System.out.print("Nhấn Enter để tiếp tục: ");
 				sc.nextLine();
-
 			} catch (Exception e) {
-				e.printStackTrace();
+				ConsoleColor.message("Đã xảy ra lỗi: " + e.getMessage(), "error");
+				sc.nextLine(); // tránh loop vô tận
 			}
-		} while (true);
-
+		}
 	}
 }

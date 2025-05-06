@@ -1,17 +1,32 @@
-
 public class ConsoleColor {
-	private final static String RED = "\u001B[31m";
-	private final static String GREEN = "\u001B[32m";
-	private final static String RESET = "\u001B[0m";
-	private final static String YELLOW = "\u001B[33m";
+	public static final String RESET = "\u001B[0m";
+	public static final String RED = "\u001B[31m";
+	public static final String GREEN = "\u001B[32m";
+	public static final String YELLOW = "\u001B[33m";
+	public static final String CYAN = "\u001B[36m";
 
-	public static void message(String message, String status) {
-		if (status.compareTo("success") == 0) {
-			System.out.println(GREEN + message + RESET);
-		} else if (status.compareTo("error") == 0) {
-			System.out.println(RED + message + RESET);
-		} else {
-			System.out.println(YELLOW + message + RESET);
+	public static void println(String message, String color) {
+		String colorCode = getColorCode(color);
+		System.out.println(colorCode + message + RESET);
+	}
+
+	public static void message(String message, String type) {
+		switch (type.toLowerCase()) {
+		case "success" -> println(message, "green");
+		case "error" -> println(message, "red");
+		case "warning" -> println(message, "yellow");
+		case "info" -> println(message, "cyan");
+		default -> println(message, "reset");
 		}
+	}
+
+	private static String getColorCode(String colorName) {
+		return switch (colorName.toLowerCase()) {
+		case "red" -> RED;
+		case "green" -> GREEN;
+		case "yellow" -> YELLOW;
+		case "cyan" -> CYAN;
+		default -> RESET;
+		};
 	}
 }
