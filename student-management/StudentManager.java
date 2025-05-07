@@ -1,3 +1,4 @@
+import java.io.*;
 import java.util.Scanner;
 
 public class StudentManager {
@@ -99,7 +100,7 @@ public class StudentManager {
 		}
 
 	}
-	
+
 	public void deleteStudent() {
 		displayStudents();
 		int choice;
@@ -112,16 +113,17 @@ public class StudentManager {
 				ConsoleColor.message("Sinh viên không hợp lệ. Yêu cầu chọn lại.", "error");
 			} else {
 				choice--;
-				for(int i = choice; i < count - 1; ++i) {
+				for (int i = choice; i < count - 1; ++i) {
 					students[i] = students[i + 1];
 				}
 				count--;
 				ConsoleColor.message("Đã xóa sinh viên thành công.", "success");
 				break;
 			}
-		} while(true);
-		
+		} while (true);
+
 	}
+
 	public void displayStudentExcellent() {
 		if (count == 0) {
 			ConsoleColor.message("Hiện tại không có sinh viên nào.", "error");
@@ -129,13 +131,46 @@ public class StudentManager {
 		}
 		double maxScore = students[0].getAverageScore();
 		int index = 0;
-		for(int i = 1; i < count; ++i) {
-			if(students[i].getAverageScore() > maxScore) {
+		for (int i = 1; i < count; ++i) {
+			if (students[i].getAverageScore() > maxScore) {
 				maxScore = students[i].getAverageScore();
 				index = i;
 			}
 		}
 		System.out.println("Sinh viên có điểm số cao nhất");
 		System.out.println(students[index]);
+	}
+
+	public void writeDataInFile() {
+		try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("data.dat"))) {
+
+			oos.writeObject(students); // ghi 1 danh sách xuống file
+			System.out.println("Đã lưu thành công" + count + " sinh viên xuống file.");
+
+		} catch (IOException e) {
+
+			e.printStackTrace();
+		}
+	}
+
+	public void readDataFromFile() {
+		try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("data.dat"))) {
+
+			Student[] arr = (Student[]) ois.readObject();
+
+			for (int i = 0; i < arr.length && i < maxStudent; i++) {
+				if (arr[i] != null) {
+					students[i] = arr[i];
+					count++;
+				} else
+					break;
+			}
+
+			System.out.println("Đã đọc thành công " + count + " sinh viên từ file.");
+
+		} catch (IOException | ClassNotFoundException e) {
+
+			e.printStackTrace();
+		}
 	}
 }

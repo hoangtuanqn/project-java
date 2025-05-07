@@ -13,6 +13,8 @@ public class Main {
 			System.out.println("3. Xóa sinh viên");
 			System.out.println("4. Hiển thị danh sách");
 			System.out.println("5. Hiển thị sinh viên điểm cao nhất");
+			System.out.println("6. Lưu sinh viên xuống tệp");
+			System.out.println("7. Lấy dữ liệu sinh viên từ tệp lên");
 			System.out.println("0. Thoát");
 			System.out.print("Chọn: ");
 			choice = sc.nextInt();
@@ -33,6 +35,12 @@ public class Main {
 				break;
 			case 5:
 				manager.displayStudentExcellent();
+				break;
+			case 6:
+				manager.writeDataInFile();
+				break;
+			case 7:
+				manager.readDataFromFile();
 				break;
 			case 0:
 				System.out.println("Đã thoát chương trình.");

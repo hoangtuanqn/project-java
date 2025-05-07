@@ -1,7 +1,6 @@
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.io.Serializable;
 
-public class Student {
+public class Student implements Serializable {
 	protected String fullName, classRoom;
 	protected double averageScore;
 	String createdAt, updatedAt;
@@ -56,7 +55,6 @@ public class Student {
 		return "Student [fullName=" + fullName + ", classRoom=" + classRoom + ", averageScore=" + averageScore
 				+ ", createdAt=" + createdAt + ", updatedAt=" + updatedAt + "]";
 	}
-
 
 
 }
